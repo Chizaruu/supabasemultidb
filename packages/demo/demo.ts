@@ -10,6 +10,14 @@ import { AzureSQLAdapter } from "../database-adapters/azuresql/azuresql-adapter"
 import { RestAPIGenerator } from "../rest-api/rest-generator";
 import { AdapterRegistry } from "../database-adapters/core/adapter";
 
+/**
+ * Helper function to safely extract error message from unknown error type
+ */
+function getErrorMessage(error: unknown): string {
+    if (error instanceof Error) return error.message;
+    return String(error);
+}
+
 // Register adapters
 AdapterRegistry.register("postgresql", async (config) => {
     const adapter = new PostgreSQLAdapter();
@@ -94,7 +102,7 @@ async function demoBasicOperations() {
     try {
         await pgAdapter.createTable("users", userColumns);
         console.log("✓ PostgreSQL: users table created");
-    } catch (e) {
+    } catch (_error) {
         console.log("✓ PostgreSQL: users table already exists");
     }
 
@@ -108,7 +116,7 @@ async function demoBasicOperations() {
         }));
         await azureAdapter.createTable("users", azureColumns);
         console.log("✓ Azure SQL: users table created");
-    } catch (e) {
+    } catch (_error) {
         console.log("✓ Azure SQL: users table already exists");
     }
 
@@ -473,7 +481,7 @@ async function main() {
             try {
                 await demo.fn();
             } catch (error) {
-                console.error(`\n❌ Error in ${demo.name}:`, error.message);
+                console.error(`\n❌ Error in ${demo.name}:`, getErrorMessage(error));
             }
         }
     } else {
@@ -482,7 +490,7 @@ async function main() {
             try {
                 await demos[demoIndex].fn();
             } catch (error) {
-                console.error(`\n❌ Error:`, error.message);
+                console.error(`\n❌ Error:`, getErrorMessage(error));
             }
         } else {
             console.log("Invalid demo number");
