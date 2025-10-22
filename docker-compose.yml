@@ -1,0 +1,26 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+    database:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        environment:
+            ACCEPT_EULA: Y
+            SA_PASSWORD: YourPassword123!
+        ports:
+            - "1433:1433"
+
+    studio-bridge:
+        build: .
+        environment:
+            DB_PROVIDER: azuresql
+            DB_HOST: database
+        ports:
+            - "54321:54321"
+
+    studio:
+        image: supabase/studio:latest
+        environment:
+            SUPABASE_URL: http://studio-bridge:54321
+        ports:
+            - "3000:3000"

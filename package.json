@@ -1,0 +1,57 @@
+{
+  "name": "@supabase/multidb",
+  "version": "0.1.0",
+  "description": "Multi-database support for Supabase - PostgreSQL, Azure SQL, MySQL, and more",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supabase/multidb"
+  },
+  "keywords": [
+    "supabase",
+    "database",
+    "postgresql",
+    "azure-sql",
+    "mysql",
+    "adapter",
+    "rest-api",
+    "baas"
+  ],
+  "author": "Supabase Community",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "demo": "cd packages/demo && ts-node demo.ts",
+    "studio": "ts-node packages/demo/studio-example.ts",
+    "studio:azuresql": "ts-node packages/demo/studio-example.ts azuresql",
+    "studio:postgresql": "ts-node packages/demo/studio-example.ts postgresql",
+    "lint": "eslint packages --ext .ts",
+    "format": "prettier --write \"packages/**/*.ts\"",
+    "clean": "rm -rf packages/*/dist packages/*/node_modules",
+    "dev": "npm run build && npm run demo"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.23",
+    "@types/mssql": "^9.1.8",
+    "@types/node": "^20.19.23",
+    "@types/pg": "^8.15.5",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mssql": "^10.0.4",
+    "pg": "^8.16.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
